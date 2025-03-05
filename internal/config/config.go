@@ -15,11 +15,20 @@ type HTTPServer struct {
 // env-default:"production"
 
 type Config struct {
-	Env 		string `yaml:"env" env:"ENV" env-required:"true"` 
-	StoragePath string `yaml:"storage_path" env-required:"true"`
-	HTTPServer `yaml:"http_server"`
-}
+	Env         string `yaml:"env" env-default:"local"`
+	StoragePath string `yaml:"storage_path"`
+	
+	HTTPServer struct {
+		Address string `yaml:"address"`
+	} `yaml:"http_server"`
 
+	// MySQL specific configuration
+	DBHost     string `yaml:"db_host"`
+	DBPort     int    `yaml:"db_port"`
+	DBUser     string `yaml:"db_user"`
+	DBPassword string `yaml:"db_password"`
+	DBName     string `yaml:"db_name"`
+}
 
 func MustLoad() *Config{
 	var configPath string
